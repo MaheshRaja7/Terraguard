@@ -1,0 +1,75 @@
+@import "leaflet/dist/leaflet.css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  background-color: #070b14;
+  color: #f1f5f9;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+/* Custom Scrollbar for Emergency Operations Center */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #091122;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e3156;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}
+
+/* Radar pulse animation for critical zones */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+.animate-radar-critical {
+  animation: radar-pulse 2s infinite;
+}
+
+/* Leaflet dark theme map tiles filter */
+.leaflet-container {
+  background: #080e1e !important;
+  font-family: inherit;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.eoc-map-tiles {
+  filter: brightness(0.7) invert(1) contrast(3) hue-rotate(200deg) saturate(0.35);
+}
+
+/* High contrast font mono overrides */
+.font-mono {
+  font-family: 'JetBrains Mono', monospace !important;
+}

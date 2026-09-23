@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+.env
+.env.*
+
+# Node / frontend
+frontend/node_modules/
+frontend/.next/
+frontend/.vercel/
+frontend/out/
+frontend/.cache/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local uploads and generated runtime data
+uploads/
+backend/uploads/
+
+# Build/cache files
+*.tsbuildinfo
+
+# Temporary development files
+tmp_*.py
+tmp_*.bat
