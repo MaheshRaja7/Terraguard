@@ -30,10 +30,12 @@ export function ZoneDetailDrawer({ zone, onClose }: ZoneDetailDrawerProps) {
   useEffect(() => {
     if (!zone) return;
 
+    const { latitude, longitude } = zone.properties;
+
     async function loadWeather() {
       setWeatherLoading(true);
       try {
-        const data = await api.getWeather(zone.properties.latitude, zone.properties.longitude);
+        const data = await api.getWeather(latitude, longitude);
         setWeather(data);
       } catch (error) {
         console.error("Zone weather fetch failed", error);
