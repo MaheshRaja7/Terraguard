@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  Polyline,
-} from "react-leaflet";
+import dynamic from "next/dynamic";
 import {
   Route,
   AlertTriangle,
@@ -56,6 +50,15 @@ const buildDirectRoute = (origin: GeoPoint, destination: GeoPoint): [number, num
   [origin.lat, origin.lng],
   [destination.lat, destination.lng],
 ];
+
+const SafeRouteMap = dynamic(() => import("@/components/map/SafeRouteMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center text-slate-400 font-mono text-xs">
+      INITIALIZING SAFE ROUTE MAP...
+    </div>
+  ),
+});
 
 async function geocodePlace(query: string): Promise<GeoPoint | null> {
   const trimmed = query.trim();
@@ -311,68 +314,12 @@ export default function SafeRoutePage() {
         </div>
 
         <div className="h-[480px] w-full">
-          <MapContainer
-            center={[(origin.lat + destination.lat) / 2, (origin.lng + destination.lng) / 2]}
-            zoom={8}
-            scrollWheelZoom
-            style={{ height: "100%", width: "100%" }}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-
-            <Polyline
-              positions={directRoute}
-              pathOptions={{
-                color: "#ef4444",
-                weight: 7,
-                opacity: 0.9,
-                dashArray: "10 12",
-              }}
-            />
-
-            <Polyline
-              positions={safeRoute}
-              pathOptions={{
-                color: "#22c55e",
-                weight: 9,
-                opacity: 1,
-                lineCap: "round",
-                lineJoin: "round",
-              }}
-            />
-
-            <Polyline
-              positions={safeRoute}
-              pathOptions={{
-                color: "#bbf7d0",
-                weight: 4,
-                opacity: 0.9,
-                dashArray: "1 12",
-                lineCap: "round",
-                lineJoin: "round",
-              }}
-            />
-
-            <Marker position={[origin.lat, origin.lng]}>
-              <Popup>
-                <div className="text-xs font-mono text-slate-900">
-                  <div className="font-bold text-emerald-700">Origin</div>
-                  <div>{origin.name}</div>
-                </div>
-              </Popup>
-            </Marker>
-
-            <Marker position={[destination.lat, destination.lng]}>
-              <Popup>
-                <div className="text-xs font-mono text-slate-900">
-                  <div className="font-bold text-red-700">Destination</div>
-                  <div>{destination.name}</div>
-                </div>
-              </Popup>
-            </Marker>
-          </MapContainer>
+          <SafeRouteMap
+            origin={origin}
+            destination={destination}
+            directRoute={directRoute}
+            safeRoute={safeRoute}
+          />
         </div>
       </div>
     </div>
