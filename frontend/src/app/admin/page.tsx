@@ -55,6 +55,16 @@ export default function AdminPage() {
     }
   };
 
+  const formatPercent = (value?: number) => {
+    if (typeof value !== "number" || Number.isNaN(value)) return "0.0%";
+    return `${(value * 100).toFixed(1)}%`;
+  };
+
+  const formatPoints = (value?: number) => {
+    if (typeof value !== "number" || Number.isNaN(value)) return "0.0 pts";
+    return `${value.toFixed(2)} pts`;
+  };
+
   const handleFileUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedFile) return;
@@ -161,27 +171,39 @@ export default function AdminPage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
           <div className="p-2.5 bg-[#121f3b] rounded border border-slate-800 text-center">
             <div className="text-[10px] text-slate-400">ACCURACY</div>
-            <div className="text-lg font-black text-emerald-400 mt-0.5">88.0%</div>
+            <div className="text-lg font-black text-emerald-400 mt-0.5">
+              {formatPercent(modelInfo?.metrics?.accuracy)}
+            </div>
           </div>
           <div className="p-2.5 bg-[#121f3b] rounded border border-slate-800 text-center">
             <div className="text-[10px] text-slate-400">PRECISION</div>
-            <div className="text-lg font-black text-emerald-400 mt-0.5">87.8%</div>
+            <div className="text-lg font-black text-emerald-400 mt-0.5">
+              {formatPercent(modelInfo?.metrics?.precision)}
+            </div>
           </div>
           <div className="p-2.5 bg-[#121f3b] rounded border border-slate-800 text-center">
             <div className="text-[10px] text-slate-400">RECALL</div>
-            <div className="text-lg font-black text-emerald-400 mt-0.5">88.0%</div>
+            <div className="text-lg font-black text-emerald-400 mt-0.5">
+              {formatPercent(modelInfo?.metrics?.recall)}
+            </div>
           </div>
           <div className="p-2.5 bg-[#121f3b] rounded border border-slate-800 text-center">
             <div className="text-[10px] text-slate-400">F1-SCORE</div>
-            <div className="text-lg font-black text-emerald-400 mt-0.5">87.9%</div>
+            <div className="text-lg font-black text-emerald-400 mt-0.5">
+              {formatPercent(modelInfo?.metrics?.f1_score)}
+            </div>
           </div>
           <div className="p-2.5 bg-[#121f3b] rounded border border-slate-800 text-center">
             <div className="text-[10px] text-slate-400">MAE (0-100)</div>
-            <div className="text-lg font-black text-sky-400 mt-0.5">2.70 pts</div>
+            <div className="text-lg font-black text-sky-400 mt-0.5">
+              {formatPoints(modelInfo?.metrics?.mae)}
+            </div>
           </div>
           <div className="p-2.5 bg-[#121f3b] rounded border border-slate-800 text-center">
             <div className="text-[10px] text-slate-400">RMSE</div>
-            <div className="text-lg font-black text-sky-400 mt-0.5">3.33 pts</div>
+            <div className="text-lg font-black text-sky-400 mt-0.5">
+              {formatPoints(modelInfo?.metrics?.rmse)}
+            </div>
           </div>
         </div>
       </div>
