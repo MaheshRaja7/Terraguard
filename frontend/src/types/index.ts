@@ -15,6 +15,11 @@ export interface ZoneProperties {
   road_exposure: string;
   critical_facilities: string[];
   baseline_susceptibility: number;
+  risk_score?: number;
+  live_weather?: {
+    rain_24h?: number;
+    soil_moisture_0_7?: number;
+  };
   geology?: string;
   land_cover?: string;
 }
